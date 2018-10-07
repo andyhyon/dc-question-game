@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Question Game</title>
+  </head>
+
+  <body>
+
+    <h1>DC Question Game</h1>
+    <h3 id="game-instruction">Type "t" for true and "f" for false</h3>
+    <div id="game-score">Score: 0</div>
+    <div id="game-question"></div>
+
+
+    <script type="text/JavaScript">
+
+      var gameObject = {
+        q1: ["Batman is Bruce Wayne", "t"],
+        q2: ["Superman is Clark Kent", "t"],
+        q3: ["Superman is also Jor El", "f"],
+        q4: ["The Flash is Barry Allen", "t"],
+        q5: ["Dick Grayson is also The Flash", "f"],
+        q6: ["There is more than one Green Lantern from Earth", "t"],
+        q7: ["Guy Gardner is the best Green Lantern", "f"],
+        q8: ["Robins often die", "t"],
+        q9: ["Damian does not have daddy issues", "f"],
+        q10: ["Teen Titans GO is good continuation of the original series", "f"]
+      }
+
+      var gameQuestionElement = document.getElementById("game-question");
+      var gameInstructionElement = document.getElementById("game-instruction");
+      var gameScoreElement = document.getElementById("game-score");
+
+      // Array containing keys of gameObject (e.g. q1, q2...q10)
+      gameKeyArray = Object.keys(gameObject);
+
+      // Variable that becomes the index for gameKeyArray
+      var gameKeyIndex = 0
+
+      // Variables used inside function presentQuestion but declared outside as it's called to
+      var gameKey;
+      var gameQuestion;
+      var gameAnswer;
+
+      // Variables keep track of user score
+      var userScore = 0;
+
+      // Function to present one question at a time on the screen
+      function presentQuestion () {
+
+        // Conditional to determine if the game continues or stops based on the current key index
+        if (gameKeyIndex < gameKeyArray.length ) {
+
+          // Grabs keys (questions) from the array (list of question numbers)
+          gameKey = gameKeyArray[gameKeyIndex];
+
+          // Grabs the values (question and answer) from the array (list of question numbers)
+          gameQuestion = gameObject[gameKey][0];
+          gameAnswer = gameObject[gameKey][1];
+
+
+          // Property to replace the contents of the div with the game's questions
+          gameQuestionElement.textContent = gameQuestion;
+
+          // At the end of this function, the index for the array containing the keys for gameObject will increase to move onto the next question
+          gameKeyIndex++;
+        }
+        // When there are no more questions, display "Game Over!"
+        else {
+          gameQuestionElement.textContent = "Thanks for playing!"
+        }
+      }
+
+      // Calls the function above to present the first question
+      presentQuestion();
+
+      // Function to test the users' answer against the game's answer
+      document.onkeyup = function(event) {
+        var userAnswer = event.key.toLowerCase();
+
+        if (userAnswer === "t" || userAnswer == "f") {
+          if (userAnswer == gameAnswer) {
+            gameInstructionElement.textContent = "1 point for Hufflepuff!";
+            userScore++;
+          }
+          else {
+            gameInstructionElement.textContent = "You filthy muggle!";
+          }
+        }
+        else {
+          gameInstructionElement.textContent = "You had one job...";
+        }
+
+        presentQuestion();
+        gameScoreElement.textContent = "Your score: " + userScore;
+      }
+
+    </script>
+  </body>
+</html>
