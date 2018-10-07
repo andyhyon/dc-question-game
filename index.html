@@ -87,13 +87,12 @@
           else {
             gameInstructionElement.textContent = "You filthy muggle!";
           }
+          presentQuestion();
+          gameScoreElement.textContent = "Your score: " + userScore;
         }
         else {
           gameInstructionElement.textContent = "You had one job...";
         }
-
-        presentQuestion();
-        gameScoreElement.textContent = "Your score: " + userScore;
       }
 
     </script>
